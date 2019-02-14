@@ -1,0 +1,1 @@
+This repository contains DDS 6306 homework for SMU's datascience class. 

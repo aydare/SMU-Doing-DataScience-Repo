@@ -1,0 +1,134 @@
+---
+title: "Home Work 3 DDS 6306"
+author: "Ayoade Dare"
+date: "February 13, 2019"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+Git Code
+
+ayoad@DESKTOP-L2HC7DU  ~/Documents (master)
+
+$ pwd
+
+/c/Users/ayoad/Documents
+
+ayoad@DESKTOP-L2HC7DU  ~/Documents (master)
+
+$ cd /D/OneDrive/Documents/SMU-DESKTOP-l2HC7DU/Classes/"MSDS 6306 Doing D
+atascience"/"Unit 3"/
+
+ayoad@DESKTOP-L2HC7DU  /D/OneDrive/Documents/SMU-DESKTOP-l2HC7DU/Classes/M
+SDS 6306 Doing Datascience/Unit 3
+
+$ pwd
+
+/D/OneDrive/Documents/SMU-DESKTOP-l2HC7DU/Classes/MSDS 6306 Doing Datascie
+nce/Unit 3
+
+ayoad@DESKTOP-L2HC7DU MINGW64 /D/OneDrive/Documents/SMU-DESKTOP-L2HC7DU/Classes/MSDS 6306 Doing Datascience/Unit 3
+
+$ git clone https://github.com/awesomedata/awesome-public-datasets.git
+2a.
+```{r Import Titanic csv, echo=TRUE}
+df<-read.csv("D:/OneDrive/Documents/SMU-DESKTOP-L2HC7DU/Classes/MSDS 6306 Doing Datascience/Unit 3/awesome-public-datasets/Datasets/titanic.csv",sep =",",header = TRUE,stringsAsFactors = FALSE)
+```
+
+2b.
+```{r Gender Count}
+library(plyr)
+gender<-count(df,vars = "Sex")
+
+```
+
+```{r Gender, echo=TRUE}
+View(gender)
+```
+Plot of the genders on the Titanic
+```{r Plot, echo=FALSE}
+library(ggplot2)
+ggplot(data = gender,aes(gender$Sex,gender$freq))+geom_bar(stat = "identity",width = 0.5,fill="blue")+ggtitle("Gender Count of the passengers on the Titanic")+xlab("Gender") +ylab("Frequency")
+```
+
+2c.
+
+
+3.
+
+```{r Import Sleep Data, echo=TRUE}
+sleep_data<-read.csv("D:/OneDrive/Documents/SMU-DESKTOP-L2HC7DU/Classes/MSDS 6306 Doing Datascience/Unit 3/HW3/sleep_data_01.csv",sep = ",",header = TRUE,stringsAsFactors = FALSE)
+```
+
+
+
+
+3a-3d
+```{r Sleep Function}
+Sleep_Function<-function(x){
+  Age_Median<-median(x[["Age"]],na.rm = TRUE)
+  Sleep_Min<-min(x[["Duration"]],na.rm = TRUE)
+  Sleep_Max<-max(x[["Duration"]],na.rm = TRUE)
+  Sleep_Mean<-mean(x[["RSES"]],na.rm = TRUE)
+  Sleep_sd<-sd(x[["RSES"]],na.rm = TRUE)
+  sleep_range<-Sleep_Max-Sleep_Min
+  Report<-c(Age_Median/5,Sleep_Mean/5,Sleep_sd/5,sleep_range)
+  names(Report)<-c("MedianAge","SelfEsteem","SE_SD","Duration Range")
+  round(Report,2)
+}
+Sleep_Function(sleep_data)
+```
+
+3e.
+#```{r Sleep Function, echo=TRUE}
+#Sleep_Function(sleep_data)
+#```
+
+4 a-c
+```{r}
+library(fivethirtyeight)
+df<-fivethirtyeight::college_recent_grads
+vignette("fivethirtyeight",package = "fivethirtyeight")
+
+```
+
+4d
+```{r echo=TRUE}
+dim(df)
+
+```
+
+```{r echo=TRUE}
+colnames(df)
+
+```
+
+```{r echo=TRUE}
+str(df)
+```
+
+5.
+```{r}
+colnames(df)
+NCOL(df)
+```
+
+```{r}
+library(plyr)
+major_count<-count(df,vars = "major_category")
+major_count
+```
+
+```{r}
+library(ggplot2)
+par(las=2)
+mj_plot<-ggplot2::ggplot(major_count,aes(major_count$major_category,major_count$freq))+geom_bar(stat = "identity",fill="red")+ggtitle("Popular Major")+xlab("Major Categories")+ylab("Frequency")
+mj_plot +coord_flip()
+```
+
+5d.
+```{r}
+write.csv(df,file = "FiveThirtyEight.csv",row.names = FALSE)
+```
+
